@@ -18,31 +18,23 @@ const express = require('express');
 const log4js = require('log4js');
 const config = require('config');
 
-const health = require('./health');
-const ping = require('./ping');
-const orderDAO = require('./orderDAO');
+const orderDAO = require('../controllers/orderDAO');
 
 const router = express.Router();
 
 /**
  * Set up logging
  */
-const logger = log4js.getLogger('routes - index');
+const logger = log4js.getLogger('routes - ping');
 logger.setLevel(config.logLevel);
+
+logger.debug('setting up routes for orderDAO');
 
 /**
  * Add routes
  */
-router.use('/health', health);
-router.use('/ping', ping);
-router.use('/order', orderDAO);
-
-/**
- * GET home page
- */
-router.get('/', (req, res) => {
-  logger.debug('GET /');
-  res.redirect('/api-docs');
-});
+router.get('/:id', orderDAO.read);
+router.post('/:id', orderDAO.store);
+router.put('/:id', orderDAO.store);
 
 module.exports = router;
