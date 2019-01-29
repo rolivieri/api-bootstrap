@@ -24,7 +24,7 @@ const walletHelper = require('../helpers/wallet');
 const ccp = require(util.getNetworkConfigFilePath('org1')); // common connection profile
 
 const gateway = new Gateway();
-const logger = log4js.getLogger('controllers - ping');
+const logger = log4js.getLogger('controllers - orderDAO');
 logger.setLevel(config.logLevel);
 
 /**
@@ -60,7 +60,10 @@ orderDAO.store = async (req, res) => {
 
     // More info on the following calls: https://fabric-sdk-node.github.io/Contract.html
 
-    var order = req.body;
+    const orderID = req.params.id;
+    logger.debug("The orderID is: " + orderID);
+    var order =  JSON.stringify(req.body);
+    logger.debug("The body is: " + order);
 
     // invoke transaction
     // Create transaction proposal for endorsement and sendTransaction to orderer
@@ -111,6 +114,9 @@ orderDAO.read = async (req, res) => {
       wallet: walletHelper.getWallet(),
     });
 
+    const orderID = req.params.id;
+    logger.debug("The orderID is: " + orderID);
+
     const network = await gateway.getNetwork(config.channelName);
     const contract = await network.getContract(config.chaincodeName);
 
@@ -118,7 +124,6 @@ orderDAO.read = async (req, res) => {
 
     // invoke transaction
     // Create transaction proposal for endorsement and sendTransaction to orderer
-    var orderID = req.params.id;
     const invokeResponse = await contract.submitTransaction('GetOrder', orderID);
 
     // query

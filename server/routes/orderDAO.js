@@ -25,10 +25,9 @@ const router = express.Router();
 /**
  * Set up logging
  */
-const logger = log4js.getLogger('routes - ping');
+const logger = log4js.getLogger('routes - orderDAO');
 logger.setLevel(config.logLevel);
-
-logger.debug('setting up routes for orderDAO');
+logger.debug('Setting up routes for orderDAO');
 
 /**
  * Add routes
