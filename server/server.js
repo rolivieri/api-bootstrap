@@ -24,6 +24,7 @@ const config = require('config');
 
 const routes = require('./routes');
 const errorHandler = require('./middlewares/error-handler');
+const testMiddleware = require('./middlewares/test-middleware');
 
 const app = express();
 
@@ -48,17 +49,26 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json({ limit: '50mb' }));
 
+app.use(testMiddleware.func1);
+app.use(testMiddleware.func2);
+
 /**
  * Register routes
  */
 app.use(routes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+
+
+// The following middlewares are not used...
+/// We should remove them since they are not doing anything
 /**
  * Error handler
  */
 app.use(errorHandler.catchNotFound);
 app.use(errorHandler.handleError);
+
+
 
 /**
  * Start server
