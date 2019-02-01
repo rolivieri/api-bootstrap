@@ -34,10 +34,11 @@ const errorHandler = {};
  */
 errorHandler.handleError = (err, req, res, next) => {
   logger.debug('error handler...');
-  
+
   logger.debug('Disconnecting gateway...'); 
   res.locals.gateway.disconnect();
-  
+
+  logger.error('Failure: ' + err);  
   const jsonRes = {
     statusCode: err.status || 500,
     success: false,

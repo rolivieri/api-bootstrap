@@ -61,7 +61,7 @@ ping.pingCC = async (req, res) => {
 
     // invoke transaction
     // Create transaction proposal for endorsement and sendTransaction to orderer
-    const invokeResponse = await contract.submitTransaction('Ping');
+    const invokeResponse = await contract.submitTransaction('Health');
 
     // query
     // simply query the ledger

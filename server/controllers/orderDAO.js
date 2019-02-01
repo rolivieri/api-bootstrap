@@ -28,6 +28,15 @@ const orderDAO = {};
 orderDAO.store = async (req, res, next) => {
   logger.debug('inside orderDAO.store()...');
 
+  // {
+  //   "id": "d3ae8bb4-10ce-40a2-9a15-35bc6399df68",
+  //   "name": "My Super Awesome Order",
+  //   "approved": true,
+  //   "amount": 1500,
+  //   "createdTs": "2020-12-31T21:17:34.371Z",
+  //   "reviewedTs": "2020-12-31T21:17:34.371Z"
+  // }
+
   try {
     const orderID = req.params.id;
     logger.debug("The orderID is: " + orderID);
@@ -36,12 +45,13 @@ orderDAO.store = async (req, res, next) => {
 
     // invoke transaction
     // Create transaction proposal for endorsement and sendTransaction to orderer
-    const invokeResponse = await res.locals.contract.submitTransaction('StoreOrder', order);
+    //const invokeResponse = await res.locals.contract.submitTransaction('StoreOrder', order);
+    await res.locals.contract.submitTransaction('StoreOrder', order);
 
     let jsonRes = {
       statusCode: 200,
       success: true,
-      result: invokeResponse.toString(),
+      //result: invokeResponse.toString(),
     };
     res.locals.jsonRes = jsonRes;
     next();
@@ -62,7 +72,10 @@ orderDAO.read = async (req, res, next) => {
     //const invokeResponse = await res.locals.contract.submitTransaction('GetOrder', orderID);
     //const invokeResponse = await res.locals.contract.submitTransaction('Ping');
     // query simply query the ledger
-    const queryResponse = await res.locals.contract.executeTransaction('Ping');
+    //const queryResponse = await res.locals.contract.executeTransaction('Health');
+    const queryResponse = await res.locals.contract.executeTransaction('GetOrder', orderID);
+    logger.debug("queryResponse: " + queryResponse);
+    queryResponse
 
     let jsonRes = {
       statusCode: 200,

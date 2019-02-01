@@ -1,6 +1,6 @@
 {
   "channelName": "defaultchannel",
-  "chaincodeName": "demo-test",
+  "chaincodeName": "openidl-chaincode",
   "logLevel": "DEBUG",
   "host": "localhost",
   "port": "3000",
