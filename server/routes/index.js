@@ -21,6 +21,8 @@ const config = require('config');
 const health = require('./health');
 const ping = require('./ping');
 const orderDAO = require('./orderDAO');
+const errorHandler = require('../middlewares/error-handler');
+const trxMiddleware = require('../middlewares/trx-middleware');
 
 const router = express.Router();
 
@@ -35,7 +37,15 @@ logger.setLevel(config.logLevel);
  */
 router.use('/health', health);
 router.use('/ping', ping);
+
+// Add middlewares for /order mount point
+router.use('/order', trxMiddleware.func1);
+router.use('/order', trxMiddleware.func2);
 router.use('/order', orderDAO);
+router.use('/order', trxMiddleware.func3);
+
+// Add error middleware for /order mount point
+router.use('/order', errorHandler.handleError);
 
 /**
  * GET home page
