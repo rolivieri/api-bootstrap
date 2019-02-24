@@ -1,6 +1,7 @@
 var FabricClient = require('fabric-client');
 //https://github.com/hyperledger/fabric-samples/blob/release-1.2/fabcar/invoke.js
 //https://fabric-sdk-node.github.io/release-1.4/index.html
+//https://fabric-sdk-node.github.io/release-1.4/tutorial-private-data.html
 
 var fs = require('fs');
 var path = require('path');
@@ -47,15 +48,24 @@ FabricClient.newDefaultKeyValueStore({
     console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
     //https://fabric-sdk-node.github.io/global.html#ChaincodeInvokeRequest
+    // var request = {
+    //     //targets: let default to the peer assigned to the client
+    //     chaincodeId: 'demo-test',
+    //     fcn: 'Health',
+    //     args: [],
+    //     txId: tx_id
+    // };
+
     var request = {
         //targets: let default to the peer assigned to the client
         chaincodeId: 'demo-test',
-        fcn: 'Health',
-        args: [],
-        txId: tx_id
+        chaincodeVersion: '3',
+        txId: tx_id,
+        "collections-config": "/Users/olivieri/git/api-bootstrap/server/config/collection-definition.json"
     };
 
-    return channel.sendTransactionProposal(request);
+   // return channel.sendTransactionProposal(request);
+   return channel.sendUpgradeProposal(request);
 }).then((results) => {
     var proposalResponses = results[0];
     var proposal = results[1];
@@ -133,6 +143,10 @@ FabricClient.newDefaultKeyValueStore({
 
         return Promise.all(promises);
     } else {
+        console.log("ERROR 1");
+        console.log(proposalResponses[0]);
+        console.log("ERROR 2");
+
         console.error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
         throw new Error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
     }
