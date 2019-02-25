@@ -1,6 +1,6 @@
 {
   "channelName": "defaultchannel",
-  "chaincodeName": "demo-test",
+  "chaincodeName": "test-demo",
   "logLevel": "DEBUG",
   "host": "localhost",
   "port": "3000",

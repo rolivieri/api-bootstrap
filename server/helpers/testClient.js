@@ -58,8 +58,8 @@ FabricClient.newDefaultKeyValueStore({
 
     var request = {
         //targets: let default to the peer assigned to the client
-        chaincodeId: 'demo-test',
-        chaincodeVersion: '3',
+        chaincodeId: 'test-demo',
+        chaincodeVersion: '2',
         txId: tx_id,
         "collections-config": "/Users/olivieri/git/api-bootstrap/server/config/collection-definition.json"
     };
