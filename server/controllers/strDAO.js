@@ -62,8 +62,7 @@ strDAO.read = async (req, res, next) => {
     //const queryResponse = await res.locals.contract.executeTransaction('Health');
     const queryResponse = await res.locals.contract.executeTransaction('GetStr');
     logger.debug("queryResponse: " + queryResponse);
-    queryResponse
-
+    
     let jsonRes = {
       statusCode: 200,
       success: true,
