@@ -2,6 +2,7 @@ var FabricClient = require('fabric-client');
 //https://github.com/hyperledger/fabric-samples/blob/release-1.2/fabcar/invoke.js
 //https://fabric-sdk-node.github.io/release-1.4/index.html
 //https://fabric-sdk-node.github.io/release-1.4/tutorial-private-data.html
+//https://hyperledger-fabric.readthedocs.io/en/release-1.2/private-data-arch.html
 
 var fs = require('fs');
 var path = require('path');
